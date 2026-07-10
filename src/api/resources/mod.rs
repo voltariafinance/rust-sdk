@@ -5,6 +5,7 @@
 //! - **Clients**
 //! - **Sandbox**
 //! - **Accounts**
+//! - **Collections**
 //! - **Documents**
 //! - **Investors**
 //! - **Installments**
@@ -18,6 +19,7 @@ use crate::{ApiError, ClientConfig};
 
 pub mod accounts;
 pub mod clients;
+pub mod collections;
 pub mod documents;
 pub mod drawdowns;
 pub mod installments;
@@ -32,6 +34,7 @@ pub struct ApiClient {
     pub clients: ClientsClient,
     pub sandbox: SandboxClient,
     pub accounts: AccountsClient,
+    pub collections: CollectionsClient,
     pub documents: DocumentsClient,
     pub investors: InvestorsClient,
     pub installments: InstallmentsClient,
@@ -49,6 +52,7 @@ impl ApiClient {
             clients: ClientsClient::new(config.clone())?,
             sandbox: SandboxClient::new(config.clone())?,
             accounts: AccountsClient::new(config.clone())?,
+            collections: CollectionsClient::new(config.clone())?,
             documents: DocumentsClient::new(config.clone())?,
             investors: InvestorsClient::new(config.clone())?,
             installments: InstallmentsClient::new(config.clone())?,
@@ -63,6 +67,7 @@ impl ApiClient {
 
 pub use accounts::AccountsClient;
 pub use clients::ClientsClient;
+pub use collections::CollectionsClient;
 pub use documents::DocumentsClient;
 pub use drawdowns::DrawdownsClient;
 pub use installments::InstallmentsClient;

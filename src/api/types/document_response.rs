@@ -35,6 +35,9 @@ pub struct DocumentResponse {
     /// Optional expiry date of the document
     #[serde(skip_serializing_if = "Option::is_none")]
     pub expiry_date: Option<NaiveDate>,
+    /// The ID of the associated distribution (coupon), if applicable
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub distribution_id: Option<String>,
     /// The date and time when the document was created
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -61,6 +64,7 @@ pub struct DocumentResponseBuilder {
     folder_path: Option<String>,
     document_date: Option<NaiveDate>,
     expiry_date: Option<NaiveDate>,
+    distribution_id: Option<String>,
     created_at: Option<DateTime<FixedOffset>>,
 }
 
@@ -120,6 +124,11 @@ impl DocumentResponseBuilder {
         self
     }
 
+    pub fn distribution_id(mut self, value: impl Into<String>) -> Self {
+        self.distribution_id = Some(value.into());
+        self
+    }
+
     pub fn created_at(mut self, value: DateTime<FixedOffset>) -> Self {
         self.created_at = Some(value);
         self
@@ -151,6 +160,7 @@ impl DocumentResponseBuilder {
             folder_path: self.folder_path,
             document_date: self.document_date,
             expiry_date: self.expiry_date,
+            distribution_id: self.distribution_id,
             created_at: self
                 .created_at
                 .ok_or_else(|| BuildError::missing_field("created_at"))?,

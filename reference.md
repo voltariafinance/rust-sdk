@@ -781,6 +781,111 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.clients.<a href="/src/api/resources/clients/client.rs">list_client_portal_users</a>(client_id: String, page: Option&lt;Option&lt;i64&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseClientUserResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Paginated list of portal users belonging to a client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .clients
+        .list_client_portal_users(
+            &"client_id".to_string(),
+            &ListClientPortalUsersQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**client_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, email, status, first_name, last_name. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.clients.<a href="/src/api/resources/clients/client.rs">add_client_portal_user</a>(client_id: String, request: ClientUserInviteRequest) -> Result&lt;ClientUserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
@@ -1887,6 +1992,329 @@ async fn main() {
 <dd>
 
 **account_id:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Collections
+<details><summary><code>client.collections.<a href="/src/api/resources/collections/client.rs">list_collection_actions</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseCollectionActionResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all collection actions configured for your partner account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .collections
+        .list_collection_actions(
+            &ListCollectionActionsQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, name, action_type, is_active, timing. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.collections.<a href="/src/api/resources/collections/client.rs">list_collection_action_logs</a>(client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, installment_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, status: Option&lt;Option&lt;Option&lt;CollectionActionStatusEnum&gt;&gt;&gt;, action_type: Option&lt;Option&lt;Option&lt;CollectionActionTypeEnum&gt;&gt;&gt;, page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseCollectionActionLogResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve collection action logs for your partner account. Supports filtering by client, loan, installment, status, or action type.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .collections
+        .list_collection_action_logs(
+            &ListCollectionActionLogsQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**client_id:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loan_id:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**installment_id:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `Option<Option<CollectionActionStatusEnum>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**action_type:** `Option<Option<CollectionActionTypeEnum>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, collection_action_id, action_type, status, client_id, loan_id, installment_id, scheduled_for. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.collections.<a href="/src/api/resources/collections/client.rs">update_collection_action_log</a>(log_id: String, request: CollectionActionLogUpdatePayload) -> Result&lt;CollectionActionLogResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the status and notes of a collection action log.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .collections
+        .update_collection_action_log(
+            &"log_id".to_string(),
+            &CollectionActionLogUpdatePayload {
+                status: CollectionActionLogUpdatePayloadStatus::Completed,
+                notes: None,
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**log_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `CollectionActionLogUpdatePayloadStatus` — The updated status of the action: 'completed' or 'failed'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `Option<Option<String>>` — Notes about this action
     
 </dd>
 </dl>
@@ -3590,6 +4018,266 @@ async fn main() {
 </details>
 
 ## Loans
+<details><summary><code>client.loans.<a href="/src/api/resources/loans/client.rs">list_loan_review_requests</a>(loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseLoanReviewRequestResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List loan review requests for your partner account, optionally filtered by loan ID or client ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .loans
+        .list_loan_review_requests(
+            &ListLoanReviewRequestsQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**loan_id:** `Option<Option<String>>` — Filter by loan ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `Option<Option<String>>` — Filter by client ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, loan_id, client_id, status. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.loans.<a href="/src/api/resources/loans/client.rs">create_loan_review_request</a>(request: LoanReviewRequestCreatePayload) -> Result&lt;LoanReviewRequestResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Ask Voltaria to review a not-yet-disbursed (pending or pre-approved) loan before disbursement.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .loans
+        .create_loan_review_request(
+            &LoanReviewRequestCreatePayload {
+                loan_id: "loan_1234567890abcdef".to_string(),
+                notes: None,
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**loan_id:** `String` — The ID of the loan to be reviewed. Must be a not-yet-disbursed (pending or pre-approved) loan belonging to the current partner
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `Option<Option<String>>` — Optional note from the requester explaining the review request
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.loans.<a href="/src/api/resources/loans/client.rs">get_loan_review_request</a>(request_id: String) -> Result&lt;LoanReviewRequestResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific loan review request by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .loans
+        .get_loan_review_request(&"request_id".to_string(), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_id:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.loans.<a href="/src/api/resources/loans/client.rs">list_loans</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseLoanResponseWithClientInfo, ApiError&gt;</code></summary>
 <dl>
 <dd>

@@ -22,6 +22,8 @@ pub struct LimitRequestResponse {
     /// The ID of the waiver associated with this limit request
     #[serde(skip_serializing_if = "Option::is_none")]
     pub waiver_id: Option<String>,
+    /// The origin of the request. 'partner' indicates the request was submitted by your account; 'internal' indicates it was initiated by Winyield on your behalf.
+    pub source: LimitRequestSourceEnum,
     /// The timestamp when the limit request was created
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -44,6 +46,7 @@ pub struct LimitRequestResponseBuilder {
     reason: Option<String>,
     response: Option<String>,
     waiver_id: Option<String>,
+    source: Option<LimitRequestSourceEnum>,
     created_at: Option<DateTime<FixedOffset>>,
 }
 
@@ -83,6 +86,11 @@ impl LimitRequestResponseBuilder {
         self
     }
 
+    pub fn source(mut self, value: LimitRequestSourceEnum) -> Self {
+        self.source = Some(value);
+        self
+    }
+
     pub fn created_at(mut self, value: DateTime<FixedOffset>) -> Self {
         self.created_at = Some(value);
         self
@@ -95,6 +103,7 @@ impl LimitRequestResponseBuilder {
     /// - [`status`](LimitRequestResponseBuilder::status)
     /// - [`requested_limit`](LimitRequestResponseBuilder::requested_limit)
     /// - [`reason`](LimitRequestResponseBuilder::reason)
+    /// - [`source`](LimitRequestResponseBuilder::source)
     /// - [`created_at`](LimitRequestResponseBuilder::created_at)
     pub fn build(self) -> Result<LimitRequestResponse, BuildError> {
         Ok(LimitRequestResponse {
@@ -113,6 +122,9 @@ impl LimitRequestResponseBuilder {
                 .ok_or_else(|| BuildError::missing_field("reason"))?,
             response: self.response,
             waiver_id: self.waiver_id,
+            source: self
+                .source
+                .ok_or_else(|| BuildError::missing_field("source"))?,
             created_at: self
                 .created_at
                 .ok_or_else(|| BuildError::missing_field("created_at"))?,

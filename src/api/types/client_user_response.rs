@@ -2,37 +2,53 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ClientUserResponse {
+    /// Unique client user identifier.
     #[serde(default)]
     pub id: String,
+    /// ID of the partner this user belongs to.
     #[serde(default)]
     pub partner_id: String,
+    /// ID of the client this user belongs to.
     #[serde(default)]
     pub client_id: String,
+    /// Email address of the portal user.
     #[serde(default)]
     pub email: String,
+    /// ID of the role assigned to the user.
     #[serde(default)]
     pub role_id: String,
+    /// Role assigned to the user.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub role: Option<RoleResponse>,
+    /// Account status. One of: `pending`, `active`, `inactive`.
     pub status: ClientUserStatusEnum,
+    /// Whether the user has verified their email address.
     #[serde(default)]
     pub is_email_verified: bool,
+    /// KYC verification status of the user.
     pub kyc_status: KycStatusEnum,
+    /// First name of the user.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub first_name: Option<String>,
+    /// Last name of the user.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_name: Option<String>,
+    /// Phone number of the user.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub phone: Option<String>,
+    /// Whether two-factor authentication is enabled for this user.
     #[serde(rename = "is_2fa_enabled")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub is2fa_enabled: Option<bool>,
+    /// Whether two-factor authentication is required for this user.
     #[serde(rename = "is_2fa_required")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub is2fa_required: Option<bool>,
+    /// Timestamp when the user was created.
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub created_at: DateTime<FixedOffset>,
+    /// Timestamp when the user was last updated.
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub updated_at: DateTime<FixedOffset>,

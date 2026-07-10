@@ -258,6 +258,38 @@ impl ClientsClient {
             .await
     }
 
+    /// Paginated list of portal users belonging to a client.
+    ///
+    /// # Arguments
+    ///
+    /// * `q` - Query string for filtering. Format: "field:operator:value;...". Supported fields: id, email, status, first_name, last_name. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn list_client_portal_users(
+        &self,
+        client_id: &str,
+        request: &ListClientPortalUsersQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<PaginatedResponseClientUserResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("v2/clients/{}/users", client_id),
+                None,
+                QueryBuilder::new()
+                    .int("page", request.page.clone())
+                    .serialize("page_size", request.page_size.clone())
+                    .serialize("order_by", request.order_by.clone())
+                    .serialize("q", request.q.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     /// Invite a new user to a client's portal account. The invited user will receive an email with a one-time link to set their password. Partner can assign any role: 'owner', 'admin', or 'viewer'.
     ///
     /// # Arguments

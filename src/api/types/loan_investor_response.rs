@@ -55,6 +55,12 @@ pub struct LoanInvestorResponse {
     pub data: Option<HashMap<String, serde_json::Value>>,
     /// The client details associated with the loan
     pub client: ClientBaseInfo,
+    /// Remaining principal for installments with status active or overdue, net of any repayments already made
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub outstanding_principal: Option<String>,
+    /// Remaining amount (principal and interest) for installments with status active or overdue, net of any repayments already made
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub remaining_amount: Option<String>,
     /// Whether the loan disbursement is paid directly to the client (as opposed to the partner).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub payment_to_the_client: Option<bool>,
@@ -87,6 +93,8 @@ pub struct LoanInvestorResponseBuilder {
     early_settlement_amount: Option<String>,
     data: Option<HashMap<String, serde_json::Value>>,
     client: Option<ClientBaseInfo>,
+    outstanding_principal: Option<String>,
+    remaining_amount: Option<String>,
     payment_to_the_client: Option<bool>,
 }
 
@@ -181,6 +189,16 @@ impl LoanInvestorResponseBuilder {
         self
     }
 
+    pub fn outstanding_principal(mut self, value: impl Into<String>) -> Self {
+        self.outstanding_principal = Some(value.into());
+        self
+    }
+
+    pub fn remaining_amount(mut self, value: impl Into<String>) -> Self {
+        self.remaining_amount = Some(value.into());
+        self
+    }
+
     pub fn payment_to_the_client(mut self, value: bool) -> Self {
         self.payment_to_the_client = Some(value);
         self
@@ -236,6 +254,8 @@ impl LoanInvestorResponseBuilder {
             client: self
                 .client
                 .ok_or_else(|| BuildError::missing_field("client"))?,
+            outstanding_principal: self.outstanding_principal,
+            remaining_amount: self.remaining_amount,
             payment_to_the_client: self.payment_to_the_client,
         })
     }

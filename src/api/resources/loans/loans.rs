@@ -14,6 +14,92 @@ impl LoansClient {
         })
     }
 
+    /// List loan review requests for your partner account, optionally filtered by loan ID or client ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `loan_id` - Filter by loan ID
+    /// * `client_id` - Filter by client ID
+    /// * `order_by` - Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    /// * `q` - Query string for filtering. Format: "field:operator:value;...". Supported fields: id, loan_id, client_id, status. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn list_loan_review_requests(
+        &self,
+        request: &ListLoanReviewRequestsQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<PaginatedResponseLoanReviewRequestResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                "v2/loans/review-requests",
+                None,
+                QueryBuilder::new()
+                    .serialize("loan_id", request.loan_id.clone())
+                    .serialize("client_id", request.client_id.clone())
+                    .serialize("page", request.page.clone())
+                    .serialize("page_size", request.page_size.clone())
+                    .serialize("order_by", request.order_by.clone())
+                    .serialize("q", request.q.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// Ask Voltaria to review a not-yet-disbursed (pending or pre-approved) loan before disbursement.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn create_loan_review_request(
+        &self,
+        request: &LoanReviewRequestCreatePayload,
+        options: Option<RequestOptions>,
+    ) -> Result<LoanReviewRequestResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "v2/loans/review-requests",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Retrieve a specific loan review request by its ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_loan_review_request(
+        &self,
+        request_id: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<LoanReviewRequestResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("v2/loans/review-requests/{}", request_id),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Retrieve all loans associated with your partner account. Supports optional filtering by client ID.
     ///
     /// # Arguments

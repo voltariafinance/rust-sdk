@@ -38,6 +38,10 @@ pub struct ClientAccountResponse {
     pub address: Option<AccountAddress>,
     /// Account status. One of: `pending`, `active`, `passive`.
     pub status: AccountStatusEnum,
+    /// Timestamp when the account was created.
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset")]
+    pub created_at: DateTime<FixedOffset>,
 }
 
 impl ClientAccountResponse {
@@ -62,6 +66,7 @@ pub struct ClientAccountResponseBuilder {
     account_type: Option<String>,
     address: Option<AccountAddress>,
     status: Option<AccountStatusEnum>,
+    created_at: Option<DateTime<FixedOffset>>,
 }
 
 impl ClientAccountResponseBuilder {
@@ -130,6 +135,11 @@ impl ClientAccountResponseBuilder {
         self
     }
 
+    pub fn created_at(mut self, value: DateTime<FixedOffset>) -> Self {
+        self.created_at = Some(value);
+        self
+    }
+
     /// Consumes the builder and constructs a [`ClientAccountResponse`].
     /// This method will fail if any of the following fields are not set:
     /// - [`id`](ClientAccountResponseBuilder::id)
@@ -137,6 +147,7 @@ impl ClientAccountResponseBuilder {
     /// - [`account_holder_type`](ClientAccountResponseBuilder::account_holder_type)
     /// - [`currency`](ClientAccountResponseBuilder::currency)
     /// - [`status`](ClientAccountResponseBuilder::status)
+    /// - [`created_at`](ClientAccountResponseBuilder::created_at)
     pub fn build(self) -> Result<ClientAccountResponse, BuildError> {
         Ok(ClientAccountResponse {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
@@ -160,6 +171,9 @@ impl ClientAccountResponseBuilder {
             status: self
                 .status
                 .ok_or_else(|| BuildError::missing_field("status"))?,
+            created_at: self
+                .created_at
+                .ok_or_else(|| BuildError::missing_field("created_at"))?,
         })
     }
 }

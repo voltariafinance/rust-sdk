@@ -16,15 +16,15 @@ pub struct WaterfallResponse {
     pub date: NaiveDate,
     /// The status of the waterfall
     pub status: WaterfallStatusEnum,
-    /// The cash balance associated with the waterfall
+    /// The payment amount recorded for the waterfall
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cash_balance: Option<String>,
-    /// The currency of the cash balance
+    pub amount: Option<String>,
+    /// The currency of the payment
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cash_balance_currency: Option<String>,
-    /// The date of the cash balance
+    pub currency: Option<String>,
+    /// The date the payment was made
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cash_balance_date: Option<NaiveDate>,
+    pub payment_date: Option<NaiveDate>,
     /// The Presigned URL of the file. This is a temporary URL that allows you to download the file.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub file_url: Option<String>,
@@ -52,9 +52,9 @@ pub struct WaterfallResponseBuilder {
     name: Option<String>,
     date: Option<NaiveDate>,
     status: Option<WaterfallStatusEnum>,
-    cash_balance: Option<String>,
-    cash_balance_currency: Option<String>,
-    cash_balance_date: Option<NaiveDate>,
+    amount: Option<String>,
+    currency: Option<String>,
+    payment_date: Option<NaiveDate>,
     file_url: Option<String>,
     created_at: Option<DateTime<FixedOffset>>,
     updated_at: Option<DateTime<FixedOffset>>,
@@ -86,18 +86,18 @@ impl WaterfallResponseBuilder {
         self
     }
 
-    pub fn cash_balance(mut self, value: impl Into<String>) -> Self {
-        self.cash_balance = Some(value.into());
+    pub fn amount(mut self, value: impl Into<String>) -> Self {
+        self.amount = Some(value.into());
         self
     }
 
-    pub fn cash_balance_currency(mut self, value: impl Into<String>) -> Self {
-        self.cash_balance_currency = Some(value.into());
+    pub fn currency(mut self, value: impl Into<String>) -> Self {
+        self.currency = Some(value.into());
         self
     }
 
-    pub fn cash_balance_date(mut self, value: NaiveDate) -> Self {
-        self.cash_balance_date = Some(value);
+    pub fn payment_date(mut self, value: NaiveDate) -> Self {
+        self.payment_date = Some(value);
         self
     }
 
@@ -136,9 +136,9 @@ impl WaterfallResponseBuilder {
             status: self
                 .status
                 .ok_or_else(|| BuildError::missing_field("status"))?,
-            cash_balance: self.cash_balance,
-            cash_balance_currency: self.cash_balance_currency,
-            cash_balance_date: self.cash_balance_date,
+            amount: self.amount,
+            currency: self.currency,
+            payment_date: self.payment_date,
             file_url: self.file_url,
             created_at: self
                 .created_at
