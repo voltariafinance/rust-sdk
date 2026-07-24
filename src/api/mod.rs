@@ -13,7 +13,7 @@ pub mod types;
 
 pub use resources::{
     AccountsClient, ApiClient, ClientsClient, CollectionsClient, DocumentsClient, DrawdownsClient,
-    InstallmentsClient, InvestorsClient, LoansClient, PartnersClient, RepaymentsClient,
-    SandboxClient, WebhooksClient,
+    InstallmentsClient, InvestorsClient, LoansClient, PartnersClient, RecoveriesClient,
+    RepaymentsClient, SandboxClient, WebhooksClient,
 };
 pub use types::*;

@@ -11,6 +11,7 @@
 //! - **Installments**
 //! - **Loans**
 //! - **Partners**
+//! - **Recoveries**
 //! - **Webhooks**
 //! - **Repayments**
 //! - **Drawdowns**
@@ -26,6 +27,7 @@ pub mod installments;
 pub mod investors;
 pub mod loans;
 pub mod partners;
+pub mod recoveries;
 pub mod repayments;
 pub mod sandbox;
 pub mod webhooks;
@@ -40,6 +42,7 @@ pub struct ApiClient {
     pub installments: InstallmentsClient,
     pub loans: LoansClient,
     pub partners: PartnersClient,
+    pub recoveries: RecoveriesClient,
     pub webhooks: WebhooksClient,
     pub repayments: RepaymentsClient,
     pub drawdowns: DrawdownsClient,
@@ -58,6 +61,7 @@ impl ApiClient {
             installments: InstallmentsClient::new(config.clone())?,
             loans: LoansClient::new(config.clone())?,
             partners: PartnersClient::new(config.clone())?,
+            recoveries: RecoveriesClient::new(config.clone())?,
             webhooks: WebhooksClient::new(config.clone())?,
             repayments: RepaymentsClient::new(config.clone())?,
             drawdowns: DrawdownsClient::new(config.clone())?,
@@ -74,6 +78,7 @@ pub use installments::InstallmentsClient;
 pub use investors::InvestorsClient;
 pub use loans::LoansClient;
 pub use partners::PartnersClient;
+pub use recoveries::RecoveriesClient;
 pub use repayments::RepaymentsClient;
 pub use sandbox::SandboxClient;
 pub use webhooks::WebhooksClient;

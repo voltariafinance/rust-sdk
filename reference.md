@@ -5121,6 +5121,227 @@ async fn main() {
 </dl>
 </details>
 
+## Recoveries
+<details><summary><code>client.recoveries.<a href="/src/api/resources/recoveries/client.rs">list_recoveries</a>(client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseRecoveryResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve recoveries recorded against your loans. Supports filtering by client or loan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .recoveries
+        .list_recoveries(
+            &ListRecoveriesQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**client_id:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loan_id:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, currency, recovery_date, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.recoveries.<a href="/src/api/resources/recoveries/client.rs">create_recovery</a>(request: RecoveryCreatePayload) -> Result&lt;RecoveryResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Record a new recovery against one of your loans.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .recoveries
+        .create_recovery(
+            &RecoveryCreatePayload {
+                loan_id: "loan_abc123".to_string(),
+                amount: RecoveryCreatePayloadAmount::Double(1.1),
+                currency: CurrencyEnum::Eur,
+                recovery_date: NaiveDate::parse_from_str("2026-07-15", "%Y-%m-%d").unwrap(),
+                notes: None,
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**loan_id:** `String` — The ID of the loan this recovery is associated with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**amount:** `RecoveryCreatePayloadAmount` — The amount recovered (must be > 0).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**currency:** `CurrencyEnum` — The currency of the recovered amount, must be one of the supported currencies: eur, gbp, usd, czk, pln, isk
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recovery_date:** `String` — The date the recovery was made.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `Option<Option<String>>` — Optional notes about the recovery.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Webhooks
 <details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client.rs">list_webhook_subscriptions</a>(page: Option&lt;Option&lt;i64&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, event_type: Option&lt;Option&lt;Option&lt;WebhookEventTypeEnum&gt;&gt;&gt;) -> Result&lt;PaginatedResponseWebhookSubscriptionResponse, ApiError&gt;</code></summary>
 <dl>
