@@ -21,7 +21,7 @@ pub struct WaterfallResponse {
     pub amount: Option<String>,
     /// The currency of the payment
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub currency: Option<String>,
+    pub currency: Option<CurrencyEnum>,
     /// The date the payment was made
     #[serde(skip_serializing_if = "Option::is_none")]
     pub payment_date: Option<NaiveDate>,
@@ -53,7 +53,7 @@ pub struct WaterfallResponseBuilder {
     date: Option<NaiveDate>,
     status: Option<WaterfallStatusEnum>,
     amount: Option<String>,
-    currency: Option<String>,
+    currency: Option<CurrencyEnum>,
     payment_date: Option<NaiveDate>,
     file_url: Option<String>,
     created_at: Option<DateTime<FixedOffset>>,
@@ -91,8 +91,8 @@ impl WaterfallResponseBuilder {
         self
     }
 
-    pub fn currency(mut self, value: impl Into<String>) -> Self {
-        self.currency = Some(value.into());
+    pub fn currency(mut self, value: CurrencyEnum) -> Self {
+        self.currency = Some(value);
         self
     }
 
