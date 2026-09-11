@@ -208,6 +208,32 @@ impl LoansClient {
             .await
     }
 
+    /// Calculate the indicative early settlement figure for a loan as of the given settlement date. The amount is indicative only, not a binding quote, and has no validity period — it changes as repayments are recorded and as the settlement date moves. Confirm the final amount with Voltaria before collecting from the borrower.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn calculate_settlement(
+        &self,
+        loan_id: &str,
+        request: &EarlySettlementPayload,
+        options: Option<RequestOptions>,
+    ) -> Result<EarlySettlementResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                &format!("v2/loans/{}/calculate-settlement", loan_id),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Create multiple loans in a single request. Processing happens asynchronously. Returns a task ID for tracking progress.
     ///
     /// # Arguments

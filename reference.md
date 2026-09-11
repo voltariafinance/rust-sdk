@@ -4643,6 +4643,87 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.loans.<a href="/src/api/resources/loans/client.rs">calculate_settlement</a>(loan_id: String, request: EarlySettlementPayload) -> Result&lt;EarlySettlementResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Calculate the indicative early settlement figure for a loan as of the given settlement date. The amount is indicative only, not a binding quote, and has no validity period — it changes as repayments are recorded and as the settlement date moves. Confirm the final amount with Voltaria before collecting from the borrower.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .loans
+        .calculate_settlement(
+            &"loan_id".to_string(),
+            &EarlySettlementPayload {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**loan_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settlement_date:** `Option<Option<String>>` — Date the loan would be settled. Must be today or later. Defaults to today when omitted.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.loans.<a href="/src/api/resources/loans/client.rs">create_bulk_loans</a>(request: BulkLoanCreatePayload) -> Result&lt;BulkLoanTaskResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>

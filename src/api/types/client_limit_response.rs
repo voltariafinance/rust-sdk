@@ -2,20 +2,28 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ClientLimitResponse {
+    /// The currency the limit is denominated in
     pub currency: CurrencyEnum,
+    /// The longest loan maturity this limit allows, in days
     #[serde(default)]
     pub max_maturity_days: i64,
+    /// The credit limit granted to the client
     #[serde(default)]
     pub limit: String,
+    /// The rate recorded on this limit
     #[serde(default)]
     pub rate: String,
+    /// Principal currently outstanding against this limit
     #[serde(default)]
     pub outstanding: String,
+    /// Limit minus outstanding. Negative when the client is over limit
     #[serde(default)]
     pub available: String,
+    /// When the limit was granted
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub created_at: DateTime<FixedOffset>,
+    /// When the limit was last changed
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
     pub updated_at: DateTime<FixedOffset>,
