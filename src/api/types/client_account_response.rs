@@ -38,6 +38,9 @@ pub struct ClientAccountResponse {
     pub address: Option<AccountAddress>,
     /// Account status. One of: `pending`, `active`, `passive`.
     pub status: AccountStatusEnum,
+    /// Confirmation of Payee result for this account. `null` when the account has never been checked, or when the check does not apply to it. One of: `matched`, `close_match`, `not_matched`, `account_not_found`, `unavailable`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cop_status: Option<CopStatusEnum>,
     /// Timestamp when the account was created.
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -66,6 +69,7 @@ pub struct ClientAccountResponseBuilder {
     account_type: Option<String>,
     address: Option<AccountAddress>,
     status: Option<AccountStatusEnum>,
+    cop_status: Option<CopStatusEnum>,
     created_at: Option<DateTime<FixedOffset>>,
 }
 
@@ -135,6 +139,11 @@ impl ClientAccountResponseBuilder {
         self
     }
 
+    pub fn cop_status(mut self, value: CopStatusEnum) -> Self {
+        self.cop_status = Some(value);
+        self
+    }
+
     pub fn created_at(mut self, value: DateTime<FixedOffset>) -> Self {
         self.created_at = Some(value);
         self
@@ -171,6 +180,7 @@ impl ClientAccountResponseBuilder {
             status: self
                 .status
                 .ok_or_else(|| BuildError::missing_field("status"))?,
+            cop_status: self.cop_status,
             created_at: self
                 .created_at
                 .ok_or_else(|| BuildError::missing_field("created_at"))?,

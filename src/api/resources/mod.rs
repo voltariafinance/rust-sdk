@@ -14,6 +14,7 @@
 //! - **Recoveries**
 //! - **Webhooks**
 //! - **Repayments**
+//! - **Tasks**
 //! - **Drawdowns**
 
 use crate::{ApiError, ClientConfig};
@@ -30,6 +31,7 @@ pub mod partners;
 pub mod recoveries;
 pub mod repayments;
 pub mod sandbox;
+pub mod tasks;
 pub mod webhooks;
 pub struct ApiClient {
     pub config: ClientConfig,
@@ -45,6 +47,7 @@ pub struct ApiClient {
     pub recoveries: RecoveriesClient,
     pub webhooks: WebhooksClient,
     pub repayments: RepaymentsClient,
+    pub tasks: TasksClient,
     pub drawdowns: DrawdownsClient,
 }
 
@@ -64,6 +67,7 @@ impl ApiClient {
             recoveries: RecoveriesClient::new(config.clone())?,
             webhooks: WebhooksClient::new(config.clone())?,
             repayments: RepaymentsClient::new(config.clone())?,
+            tasks: TasksClient::new(config.clone())?,
             drawdowns: DrawdownsClient::new(config.clone())?,
         })
     }
@@ -81,4 +85,5 @@ pub use partners::PartnersClient;
 pub use recoveries::RecoveriesClient;
 pub use repayments::RepaymentsClient;
 pub use sandbox::SandboxClient;
+pub use tasks::TasksClient;
 pub use webhooks::WebhooksClient;

@@ -6405,6 +6405,706 @@ async fn main() {
 </dl>
 </details>
 
+## Tasks
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client.rs">list_tasks</a>(status: Option&lt;Option&lt;Option&lt;TaskStatusEnum&gt;&gt;&gt;, client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, installment_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, waterfall_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, page: Option&lt;Option&lt;i64&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseTaskPartnerResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Paginated list of the tasks shared with your partner account, optionally filtered by status or by the client, loan, installment or waterfall they relate to.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .tasks
+        .list_tasks(
+            &ListTasksQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**status:** `Option<Option<TaskStatusEnum>>` — Filter by task status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `Option<Option<String>>` — Filter by client.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loan_id:** `Option<Option<String>>` — Filter by loan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**installment_id:** `Option<Option<String>>` — Filter by installment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**waterfall_id:** `Option<Option<String>>` — Filter by waterfall.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'due_at:asc,created_at:desc'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, status, priority, due_at, created_at, client_id, loan_id, installment_id, waterfall_id. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client.rs">create_task</a>(request: TaskPartnerCreatePayload) -> Result&lt;TaskPartnerResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Open a task for your partner account. Any entity you link to it must belong to you.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .tasks
+        .create_task(
+            &TaskPartnerCreatePayload {
+                title: "Send updated bank statement".to_string(),
+                description: None,
+                priority: None,
+                due_at: None,
+                client_id: None,
+                loan_id: None,
+                installment_id: None,
+                waterfall_id: None,
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `String` — Short title of the task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `Option<Option<String>>` — Optional longer description of what needs to be done.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `Option<Option<TaskPriorityEnum>>` — Task priority. One of the following: low, medium, high, urgent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**due_at:** `Option<Option<String>>` — Optional due date for the task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `Option<Option<String>>` — Client this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loan_id:** `Option<Option<String>>` — Loan this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**installment_id:** `Option<Option<String>>` — Installment this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**waterfall_id:** `Option<Option<String>>` — Waterfall this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client.rs">get_task</a>(task_id: String) -> Result&lt;TaskPartnerResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve one of your tasks by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.tasks.get_task(&"task_id".to_string(), None).await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client.rs">update_task_status</a>(task_id: String, request: TaskPartnerStatusUpdatePayload) -> Result&lt;TaskPartnerResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Move one of your tasks to another status. Status is the only field you can change. Requires a signed-in user — API keys cannot change a task.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .tasks
+        .update_task_status(
+            &"task_id".to_string(),
+            &TaskPartnerStatusUpdatePayload {
+                status: TaskPartnerStatusUpdatePayloadStatus::Active,
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `TaskPartnerStatusUpdatePayloadStatus` — The new status of the task. One of the following: active, in_progress, blocked, done. You can move a task to any of these at any time, so one closed by mistake can be reopened. Every change is kept in the task's status history.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client.rs">list_task_status_history</a>(task_id: String, page: Option&lt;Option&lt;i64&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseTaskPartnerStatusHistoryResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The status transitions of one of your tasks, and whether each one was made by your team or by Voltaria support.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .tasks
+        .list_task_status_history(
+            &"task_id".to_string(),
+            &ListTaskStatusHistoryQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:asc'. Defaults to 'created_at:desc'.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client.rs">list_task_notes</a>(task_id: String, page: Option&lt;Option&lt;i64&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseNoteResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Notes exchanged with Voltaria on one of your tasks.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .tasks
+        .list_task_notes(
+            &"task_id".to_string(),
+            &ListTaskNotesQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:desc'. Defaults to 'created_at:desc'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, loan_id, installment_id, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="/src/api/resources/tasks/client.rs">create_task_note</a>(task_id: String, request: TaskNoteCreatePayload) -> Result&lt;NoteResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a note to one of your tasks. Requires a signed-in user — API keys cannot write notes, because a note needs an author.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .tasks
+        .create_task_note(
+            &"task_id".to_string(),
+            &TaskNoteCreatePayload {
+                content: "Statement uploaded, please re-check.".to_string(),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `String` — The note content.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Drawdowns
 <details><summary><code>client.drawdowns.<a href="/src/api/resources/drawdowns/client.rs">list_drawdowns</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseDrawdownResponse, ApiError&gt;</code></summary>
 <dl>
