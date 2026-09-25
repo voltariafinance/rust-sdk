@@ -1,13 +1,14 @@
 pub use crate::prelude::*;
 
-/// The life of a task: open and unclaimed, being worked on, waiting on something,
-/// then finished or called off.
+/// The life of a task: open and unclaimed, being worked on, waiting on something or
+/// on a reviewer, then finished or called off.
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TaskStatusEnum {
     Active,
     InProgress,
     Blocked,
+    ReviewNeeded,
     Done,
     Cancelled,
     /// This variant is used for forward compatibility.
@@ -21,6 +22,7 @@ impl Serialize for TaskStatusEnum {
             Self::Active => serializer.serialize_str("active"),
             Self::InProgress => serializer.serialize_str("in_progress"),
             Self::Blocked => serializer.serialize_str("blocked"),
+            Self::ReviewNeeded => serializer.serialize_str("review_needed"),
             Self::Done => serializer.serialize_str("done"),
             Self::Cancelled => serializer.serialize_str("cancelled"),
             Self::__Unknown(val) => serializer.serialize_str(val),
@@ -35,6 +37,7 @@ impl<'de> Deserialize<'de> for TaskStatusEnum {
             "active" => Ok(Self::Active),
             "in_progress" => Ok(Self::InProgress),
             "blocked" => Ok(Self::Blocked),
+            "review_needed" => Ok(Self::ReviewNeeded),
             "done" => Ok(Self::Done),
             "cancelled" => Ok(Self::Cancelled),
             _ => Ok(Self::__Unknown(value)),
@@ -48,6 +51,7 @@ impl fmt::Display for TaskStatusEnum {
             Self::Active => write!(f, "active"),
             Self::InProgress => write!(f, "in_progress"),
             Self::Blocked => write!(f, "blocked"),
+            Self::ReviewNeeded => write!(f, "review_needed"),
             Self::Done => write!(f, "done"),
             Self::Cancelled => write!(f, "cancelled"),
             Self::__Unknown(val) => write!(f, "{}", val),

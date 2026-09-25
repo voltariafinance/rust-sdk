@@ -12,7 +12,7 @@ pub struct TaskPartnerResponse {
     /// Longer description of what needs to be done.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
-    /// The status of the task. One of the following: active, in_progress, blocked, done, cancelled
+    /// The status of the task. One of the following: active, in_progress, blocked, review_needed, done, cancelled
     pub status: TaskStatusEnum,
     /// Task priority. One of the following: low, medium, high, urgent
     #[serde(skip_serializing_if = "Option::is_none")]

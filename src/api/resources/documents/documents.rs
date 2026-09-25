@@ -53,6 +53,7 @@ impl DocumentsClient {
     ///
     /// # Arguments
     ///
+    /// * `task_id` - The task this document answers, if any.
     /// * `options` - Additional request options such as headers, timeout, etc.
     ///
     /// # Returns
@@ -73,6 +74,7 @@ impl DocumentsClient {
                     .serialize("loan_id", request.loan_id.clone())
                     .serialize("installment_id", request.installment_id.clone())
                     .serialize("waterfall_id", request.waterfall_id.clone())
+                    .serialize("task_id", request.task_id.clone())
                     .build(),
                 options,
             )

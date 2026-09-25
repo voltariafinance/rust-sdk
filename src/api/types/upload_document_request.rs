@@ -17,6 +17,8 @@ pub struct UploadDocumentRequest {
     pub installment_id: Option<String>,
     #[serde(skip_serializing)]
     pub waterfall_id: Option<String>,
+    #[serde(skip_serializing)]
+    pub task_id: Option<String>,
 }
 impl UploadDocumentRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
@@ -58,6 +60,7 @@ pub struct UploadDocumentRequestBuilder {
     loan_id: Option<String>,
     installment_id: Option<String>,
     waterfall_id: Option<String>,
+    task_id: Option<String>,
 }
 
 impl UploadDocumentRequestBuilder {
@@ -96,6 +99,11 @@ impl UploadDocumentRequestBuilder {
         self
     }
 
+    pub fn task_id(mut self, value: impl Into<String>) -> Self {
+        self.task_id = Some(value.into());
+        self
+    }
+
     /// Consumes the builder and constructs a [`UploadDocumentRequest`].
     /// This method will fail if any of the following fields are not set:
     /// - [`category`](UploadDocumentRequestBuilder::category)
@@ -114,6 +122,7 @@ impl UploadDocumentRequestBuilder {
             loan_id: self.loan_id,
             installment_id: self.installment_id,
             waterfall_id: self.waterfall_id,
+            task_id: self.task_id,
         })
     }
 }

@@ -2455,7 +2455,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.documents.<a href="/src/api/resources/documents/client.rs">upload_document</a>(client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, installment_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, waterfall_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;DocumentResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.documents.<a href="/src/api/resources/documents/client.rs">upload_document</a>(client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, installment_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, waterfall_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, task_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;DocumentResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2502,6 +2502,7 @@ async fn main() {
                 loan_id: None,
                 installment_id: None,
                 waterfall_id: None,
+                task_id: None,
             },
             None,
         )
@@ -2546,6 +2547,14 @@ async fn main() {
 <dd>
 
 **waterfall_id:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_id:** `Option<Option<String>>` — The task this document answers, if any.
     
 </dd>
 </dl>
