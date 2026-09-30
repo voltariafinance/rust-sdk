@@ -349,6 +349,39 @@ impl ClientsClient {
             .await
     }
 
+    /// Retrieve every credit limit granted to a specific client.
+    ///
+    /// # Arguments
+    ///
+    /// * `order_by` - Field to order the results by, e.g., 'created_at:desc'
+    /// * `q` - Query string for filtering. Format: "field:operator:value;...". Supported fields: id, currency, created_at, limit. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn list_client_limits(
+        &self,
+        client_id: &str,
+        request: &ListClientLimitsQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<PaginatedResponseClientLimitHistoryResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("v2/clients/{}/limits", client_id),
+                None,
+                QueryBuilder::new()
+                    .serialize("page", request.page.clone())
+                    .serialize("page_size", request.page_size.clone())
+                    .serialize("order_by", request.order_by.clone())
+                    .serialize("q", request.q.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     /// Retrieve detailed information for a specific client using their client ID.
     ///
     /// # Arguments
