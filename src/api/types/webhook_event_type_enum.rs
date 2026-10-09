@@ -8,6 +8,7 @@ pub enum WebhookEventTypeEnum {
     ClientUpdated,
     ClientLimitUpdated,
     PartnerLimitUpdated,
+    BankConnectionUpdated,
     /// This variant is used for forward compatibility.
     /// If the server sends a value not recognized by the current SDK version,
     /// it will be captured here with the raw string value.
@@ -21,6 +22,7 @@ impl Serialize for WebhookEventTypeEnum {
             Self::ClientUpdated => serializer.serialize_str("client.updated"),
             Self::ClientLimitUpdated => serializer.serialize_str("client.limit.updated"),
             Self::PartnerLimitUpdated => serializer.serialize_str("partner.limit.updated"),
+            Self::BankConnectionUpdated => serializer.serialize_str("bank_connection.updated"),
             Self::__Unknown(val) => serializer.serialize_str(val),
         }
     }
@@ -35,6 +37,7 @@ impl<'de> Deserialize<'de> for WebhookEventTypeEnum {
             "client.updated" => Ok(Self::ClientUpdated),
             "client.limit.updated" => Ok(Self::ClientLimitUpdated),
             "partner.limit.updated" => Ok(Self::PartnerLimitUpdated),
+            "bank_connection.updated" => Ok(Self::BankConnectionUpdated),
             _ => Ok(Self::__Unknown(value)),
         }
     }
@@ -48,6 +51,7 @@ impl fmt::Display for WebhookEventTypeEnum {
             Self::ClientUpdated => write!(f, "client.updated"),
             Self::ClientLimitUpdated => write!(f, "client.limit.updated"),
             Self::PartnerLimitUpdated => write!(f, "partner.limit.updated"),
+            Self::BankConnectionUpdated => write!(f, "bank_connection.updated"),
             Self::__Unknown(val) => write!(f, "{}", val),
         }
     }

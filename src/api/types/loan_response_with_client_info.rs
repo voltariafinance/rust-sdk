@@ -50,6 +50,8 @@ pub struct LoanResponseWithClientInfo {
     /// The settlement amount at early settlement if applicable
     #[serde(skip_serializing_if = "Option::is_none")]
     pub early_settlement_amount: Option<String>,
+    /// How each installment is split into principal and interest
+    pub repayment_method: LoanRepaymentMethodEnum,
     /// Additional data related to the loan
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data: Option<HashMap<String, serde_json::Value>>,
@@ -88,6 +90,7 @@ pub struct LoanResponseWithClientInfoBuilder {
     payment_reference: Option<String>,
     early_settlement_date: Option<NaiveDate>,
     early_settlement_amount: Option<String>,
+    repayment_method: Option<LoanRepaymentMethodEnum>,
     data: Option<HashMap<String, serde_json::Value>>,
     client: Option<ClientBaseInfo>,
     outstanding_principal: Option<String>,
@@ -175,6 +178,11 @@ impl LoanResponseWithClientInfoBuilder {
         self
     }
 
+    pub fn repayment_method(mut self, value: LoanRepaymentMethodEnum) -> Self {
+        self.repayment_method = Some(value);
+        self
+    }
+
     pub fn data(mut self, value: HashMap<String, serde_json::Value>) -> Self {
         self.data = Some(value);
         self
@@ -206,6 +214,7 @@ impl LoanResponseWithClientInfoBuilder {
     /// - [`amount`](LoanResponseWithClientInfoBuilder::amount)
     /// - [`status`](LoanResponseWithClientInfoBuilder::status)
     /// - [`currency_rate`](LoanResponseWithClientInfoBuilder::currency_rate)
+    /// - [`repayment_method`](LoanResponseWithClientInfoBuilder::repayment_method)
     /// - [`client`](LoanResponseWithClientInfoBuilder::client)
     pub fn build(self) -> Result<LoanResponseWithClientInfo, BuildError> {
         Ok(LoanResponseWithClientInfo {
@@ -241,6 +250,9 @@ impl LoanResponseWithClientInfoBuilder {
             payment_reference: self.payment_reference,
             early_settlement_date: self.early_settlement_date,
             early_settlement_amount: self.early_settlement_amount,
+            repayment_method: self
+                .repayment_method
+                .ok_or_else(|| BuildError::missing_field("repayment_method"))?,
             data: self.data,
             client: self
                 .client

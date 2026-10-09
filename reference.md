@@ -1595,7 +1595,7 @@ async fn main() {
 <dl>
 <dd>
 
-**status:** `Option<Option<LoanStatusEnum>>` — The status of the client. One of the following: `pending, overdue, active, default, sold, restructured, repaid, pre_approved, rejected, deleted, inactive`
+**status:** `Option<Option<LoanStatusEnum>>` — The status of the loan. One of the following: `pending, overdue, active, default, sold, restructured, repaid, pre_approved, rejected, inactive`. Use the delete loan endpoint to delete a loan.
     
 </dd>
 </dl>
@@ -1676,7 +1676,7 @@ async fn main() {
 <dl>
 <dd>
 
-**event_type:** `WebhookEventTypeEnum` — Event type to trigger for the test. All subscriptions for this event type will be triggered if webhook_id is not provided.Possible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated
+**event_type:** `WebhookEventTypeEnum` — Event type to trigger for the test. All subscriptions for this event type will be triggered if webhook_id is not provided.Possible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated, bank_connection_updated
     
 </dd>
 </dl>
@@ -4546,6 +4546,7 @@ async fn main() {
                 }],
                 correlation_id: None,
                 loan_date: None,
+                repayment_method: None,
                 data: None,
             },
             None,
@@ -4607,6 +4608,14 @@ async fn main() {
 <dd>
 
 **installments:** `Vec<LoanInstallmentCreatePayload>` — List of installments for the loan, each with a due date and amount
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**repayment_method:** `Option<LoanRepaymentMethodEnum>` — How each installment is split into principal and interest: pmt (amortising) or constant_principal (loan amount divided equally across installments, the rest is interest)
     
 </dd>
 </dl>
@@ -4902,6 +4911,7 @@ async fn main() {
                             amount: LoanInstallmentCreatePayloadAmount::Double(26000.0),
                         },
                     ],
+                    repayment_method: None,
                     data: Some(HashMap::from([
                         ("loan_type".to_string(), serde_json::json!("business")),
                         ("purpose".to_string(), serde_json::json!("expansion")),
@@ -5707,7 +5717,7 @@ async fn main() {
 <dl>
 <dd>
 
-**event_type:** `WebhookEventTypeEnum` — Event type to subscribe toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated
+**event_type:** `WebhookEventTypeEnum` — Event type to subscribe toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated, bank_connection_updated
     
 </dd>
 </dl>
@@ -5901,7 +5911,7 @@ async fn main() {
 <dl>
 <dd>
 
-**event_type:** `Option<Option<WebhookEventTypeEnum>>` — Event type to subscribe toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated
+**event_type:** `Option<Option<WebhookEventTypeEnum>>` — Event type to subscribe toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated, bank_connection_updated
     
 </dd>
 </dl>

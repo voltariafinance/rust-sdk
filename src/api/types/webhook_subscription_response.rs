@@ -11,7 +11,7 @@ pub struct WebhookSubscriptionResponse {
     /// Description of this webhook endpoint
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
-    /// Event type subscribed toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated
+    /// Event type subscribed toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated, bank_connection_updated
     pub event_type: WebhookEventTypeEnum,
     /// Status of the webhook subscriptionPossible values: active, paused, disabled
     pub status: WebhookStatusEnum,

@@ -103,6 +103,7 @@ pub mod loan_installment_create_payload_amount;
 pub mod loan_installment_response;
 pub mod loan_investor_response;
 pub mod loan_payment_status_enum;
+pub mod loan_repayment_method_enum;
 pub mod loan_response_with_client_info;
 pub mod loan_response_with_installments;
 pub mod loan_review_request_create_payload;
@@ -284,6 +285,7 @@ pub use loan_installment_create_payload_amount::LoanInstallmentCreatePayloadAmou
 pub use loan_installment_response::LoanInstallmentResponse;
 pub use loan_investor_response::LoanInvestorResponse;
 pub use loan_payment_status_enum::LoanPaymentStatusEnum;
+pub use loan_repayment_method_enum::LoanRepaymentMethodEnum;
 pub use loan_response_with_client_info::LoanResponseWithClientInfo;
 pub use loan_response_with_installments::LoanResponseWithInstallments;
 pub use loan_review_request_create_payload::LoanReviewRequestCreatePayload;
