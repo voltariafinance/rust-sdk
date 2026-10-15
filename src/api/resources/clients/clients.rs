@@ -382,6 +382,95 @@ impl ClientsClient {
             .await
     }
 
+    /// Retrieve the counterparties of a specific client, e.g. its debtors or installers.
+    ///
+    /// # Arguments
+    ///
+    /// * `order_by` - Field to order the results by, e.g., 'created_at:desc'
+    /// * `q` - Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, name, country, company_number, status, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn list_client_counterparties(
+        &self,
+        client_id: &str,
+        request: &ListClientCounterpartiesQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<PaginatedResponseClientCounterpartyResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("v2/clients/{}/counterparties", client_id),
+                None,
+                QueryBuilder::new()
+                    .serialize("page", request.page.clone())
+                    .serialize("page_size", request.page_size.clone())
+                    .serialize("order_by", request.order_by.clone())
+                    .serialize("q", request.q.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// Add a counterparty to a specific client. It starts with your default counterparty status.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn create_client_counterparty(
+        &self,
+        client_id: &str,
+        request: &ClientCounterpartyCreatePayload,
+        options: Option<RequestOptions>,
+    ) -> Result<ClientCounterpartyResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                &format!("v2/clients/{}/counterparties", client_id),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Update the details of a counterparty of a specific client.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn update_client_counterparty(
+        &self,
+        client_id: &str,
+        counterparty_id: &str,
+        request: &ClientCounterpartyUpdatePayload,
+        options: Option<RequestOptions>,
+    ) -> Result<ClientCounterpartyResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::PATCH,
+                &format!(
+                    "v2/clients/{}/counterparties/{}",
+                    client_id, counterparty_id
+                ),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Retrieve detailed information for a specific client using their client ID.
     ///
     /// # Arguments
@@ -455,6 +544,38 @@ impl ClientsClient {
                 QueryBuilder::new()
                     .int("page", request.page.clone())
                     .serialize("page_size", request.page_size.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// Retrieve the counterparties of all your clients, e.g. their debtors or installers, with each client's name.
+    ///
+    /// # Arguments
+    ///
+    /// * `order_by` - Field to order the results by, e.g., 'created_at:desc'
+    /// * `q` - Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, name, country, company_number, status, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn list_all_client_counterparties(
+        &self,
+        request: &ListAllClientCounterpartiesQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<PaginatedResponseClientCounterpartyWithClientResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                "v2/client-counterparties",
+                None,
+                QueryBuilder::new()
+                    .serialize("page", request.page.clone())
+                    .serialize("page_size", request.page_size.clone())
+                    .serialize("order_by", request.order_by.clone())
+                    .serialize("q", request.q.clone())
                     .build(),
                 options,
             )

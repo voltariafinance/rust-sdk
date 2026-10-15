@@ -18,7 +18,7 @@ pub struct ListDocumentsQueryRequest {
     /// Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
     #[serde(skip_serializing_if = "Option::is_none")]
     pub order_by: Option<String>,
-    /// Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    /// Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, client_counterparty_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub q: Option<String>,
 }

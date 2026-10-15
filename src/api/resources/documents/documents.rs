@@ -18,7 +18,7 @@ impl DocumentsClient {
     /// # Arguments
     ///
     /// * `order_by` - Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
-    /// * `q` - Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    /// * `q` - Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, client_counterparty_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
     /// * `options` - Additional request options such as headers, timeout, etc.
     ///
     /// # Returns
@@ -53,6 +53,7 @@ impl DocumentsClient {
     ///
     /// # Arguments
     ///
+    /// * `client_counterparty_id` - The ID of the client counterparty this document belongs to, if any. Requires `client_id`; the counterparty must belong to that client.
     /// * `task_id` - The task this document answers, if any.
     /// * `options` - Additional request options such as headers, timeout, etc.
     ///
@@ -71,6 +72,10 @@ impl DocumentsClient {
                 request.clone().to_multipart(),
                 QueryBuilder::new()
                     .serialize("client_id", request.client_id.clone())
+                    .serialize(
+                        "client_counterparty_id",
+                        request.client_counterparty_id.clone(),
+                    )
                     .serialize("loan_id", request.loan_id.clone())
                     .serialize("installment_id", request.installment_id.clone())
                     .serialize("waterfall_id", request.waterfall_id.clone())

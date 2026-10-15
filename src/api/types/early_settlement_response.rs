@@ -11,9 +11,9 @@ pub struct EarlySettlementResponse {
     /// The settlement amount at early settlement
     #[serde(default)]
     pub settlement_amount: String,
-    /// The internal rate of return at early settlement
-    #[serde(default)]
-    pub settlement_irr: String,
+    /// The internal rate of return at early settlement; null when it is more than 3 times the loan's IRR, e.g. a minimum fee paid within days
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub settlement_irr: Option<String>,
     /// The original internal rate of return before early settlement
     #[serde(skip_serializing_if = "Option::is_none")]
     pub original_irr: Option<String>,
@@ -75,7 +75,6 @@ impl EarlySettlementResponseBuilder {
     /// - [`loan_id`](EarlySettlementResponseBuilder::loan_id)
     /// - [`settlement_date`](EarlySettlementResponseBuilder::settlement_date)
     /// - [`settlement_amount`](EarlySettlementResponseBuilder::settlement_amount)
-    /// - [`settlement_irr`](EarlySettlementResponseBuilder::settlement_irr)
     pub fn build(self) -> Result<EarlySettlementResponse, BuildError> {
         Ok(EarlySettlementResponse {
             loan_id: self
@@ -87,9 +86,7 @@ impl EarlySettlementResponseBuilder {
             settlement_amount: self
                 .settlement_amount
                 .ok_or_else(|| BuildError::missing_field("settlement_amount"))?,
-            settlement_irr: self
-                .settlement_irr
-                .ok_or_else(|| BuildError::missing_field("settlement_irr"))?,
+            settlement_irr: self.settlement_irr,
             original_irr: self.original_irr,
             minimum_fee: self.minimum_fee,
         })

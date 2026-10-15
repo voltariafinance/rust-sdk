@@ -17,6 +17,9 @@ pub struct DocumentResponse {
     /// The associated client ID
     #[serde(skip_serializing_if = "Option::is_none")]
     pub client_id: Option<String>,
+    /// The ID of the client counterparty the document belongs to, if applicable
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub client_counterparty_id: Option<String>,
     /// The Presigned URL of the file. This is a temporary URL that allows you to download the file.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub file_url: Option<String>,
@@ -58,6 +61,7 @@ pub struct DocumentResponseBuilder {
     file_name: Option<String>,
     file_type: Option<String>,
     client_id: Option<String>,
+    client_counterparty_id: Option<String>,
     file_url: Option<String>,
     loan_id: Option<String>,
     installment_id: Option<String>,
@@ -91,6 +95,11 @@ impl DocumentResponseBuilder {
 
     pub fn client_id(mut self, value: impl Into<String>) -> Self {
         self.client_id = Some(value.into());
+        self
+    }
+
+    pub fn client_counterparty_id(mut self, value: impl Into<String>) -> Self {
+        self.client_counterparty_id = Some(value.into());
         self
     }
 
@@ -154,6 +163,7 @@ impl DocumentResponseBuilder {
                 .file_type
                 .ok_or_else(|| BuildError::missing_field("file_type"))?,
             client_id: self.client_id,
+            client_counterparty_id: self.client_counterparty_id,
             file_url: self.file_url,
             loan_id: self.loan_id,
             installment_id: self.installment_id,

@@ -12,6 +12,8 @@ pub struct UploadDocumentRequest {
     #[serde(skip_serializing)]
     pub client_id: Option<String>,
     #[serde(skip_serializing)]
+    pub client_counterparty_id: Option<String>,
+    #[serde(skip_serializing)]
     pub loan_id: Option<String>,
     #[serde(skip_serializing)]
     pub installment_id: Option<String>,
@@ -57,6 +59,7 @@ pub struct UploadDocumentRequestBuilder {
     file_name: Option<String>,
     file: Option<Vec<u8>>,
     client_id: Option<String>,
+    client_counterparty_id: Option<String>,
     loan_id: Option<String>,
     installment_id: Option<String>,
     waterfall_id: Option<String>,
@@ -81,6 +84,11 @@ impl UploadDocumentRequestBuilder {
 
     pub fn client_id(mut self, value: impl Into<String>) -> Self {
         self.client_id = Some(value.into());
+        self
+    }
+
+    pub fn client_counterparty_id(mut self, value: impl Into<String>) -> Self {
+        self.client_counterparty_id = Some(value.into());
         self
     }
 
@@ -119,6 +127,7 @@ impl UploadDocumentRequestBuilder {
                 .ok_or_else(|| BuildError::missing_field("file_name"))?,
             file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
             client_id: self.client_id,
+            client_counterparty_id: self.client_counterparty_id,
             loan_id: self.loan_id,
             installment_id: self.installment_id,
             waterfall_id: self.waterfall_id,

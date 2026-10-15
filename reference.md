@@ -1213,6 +1213,333 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.clients.<a href="/src/api/resources/clients/client.rs">list_client_counterparties</a>(client_id: String, page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseClientCounterpartyResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the counterparties of a specific client, e.g. its debtors or installers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .clients
+        .list_client_counterparties(
+            &"client_id".to_string(),
+            &ListClientCounterpartiesQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**client_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:desc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, name, country, company_number, status, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clients.<a href="/src/api/resources/clients/client.rs">create_client_counterparty</a>(client_id: String, request: ClientCounterpartyCreatePayload) -> Result&lt;ClientCounterpartyResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a counterparty to a specific client. It starts with your default counterparty status.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .clients
+        .create_client_counterparty(
+            &"client_id".to_string(),
+            &ClientCounterpartyCreatePayload {
+                name: "Acme Installations Ltd".to_string(),
+                country: None,
+                company_number: None,
+                notes: None,
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**client_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` — The counterparty's legal or trading name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**country:** `Option<Option<String>>` — ISO 3166-1 alpha-2 code of the country the counterparty is registered in
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**company_number:** `Option<Option<String>>` — The counterparty's company registration number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `Option<Option<String>>` — Free-text notes about the counterparty
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clients.<a href="/src/api/resources/clients/client.rs">update_client_counterparty</a>(client_id: String, counterparty_id: String, request: ClientCounterpartyUpdatePayload) -> Result&lt;ClientCounterpartyResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the details of a counterparty of a specific client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .clients
+        .update_client_counterparty(
+            &"client_id".to_string(),
+            &"counterparty_id".to_string(),
+            &ClientCounterpartyUpdatePayload {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**client_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**counterparty_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `Option<String>` — The counterparty's legal or trading name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**country:** `Option<Option<String>>` — ISO 3166-1 alpha-2 code of the country the counterparty is registered in
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**company_number:** `Option<Option<String>>` — The counterparty's company registration number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `Option<Option<String>>` — Free-text notes about the counterparty
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.clients.<a href="/src/api/resources/clients/client.rs">get_client_by_id</a>(client_id: String) -> Result&lt;ClientResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
@@ -1425,6 +1752,102 @@ async fn main() {
 <dd>
 
 **page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clients.<a href="/src/api/resources/clients/client.rs">list_all_client_counterparties</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, page_size: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, q: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedResponseClientCounterpartyWithClientResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the counterparties of all your clients, e.g. their debtors or installers, with each client's name.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use voltaria_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .clients
+        .list_all_client_counterparties(
+            &ListAllClientCounterpartiesQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `Option<Option<i64>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_by:** `Option<Option<String>>` — Field to order the results by, e.g., 'created_at:desc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, name, country, company_number, status, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
     
 </dd>
 </dl>
@@ -2548,7 +2971,7 @@ async fn main() {
 <dl>
 <dd>
 
-**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+**q:** `Option<Option<String>>` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, client_counterparty_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
     
 </dd>
 </dl>
@@ -2560,7 +2983,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.documents.<a href="/src/api/resources/documents/client.rs">upload_document</a>(client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, installment_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, waterfall_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, task_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;DocumentResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.documents.<a href="/src/api/resources/documents/client.rs">upload_document</a>(client_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, client_counterparty_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, loan_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, installment_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, waterfall_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, task_id: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;DocumentResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2604,6 +3027,7 @@ async fn main() {
                 category: "category".to_string(),
                 file_name: "file_name".to_string(),
                 client_id: None,
+                client_counterparty_id: None,
                 loan_id: None,
                 installment_id: None,
                 waterfall_id: None,
@@ -2628,6 +3052,14 @@ async fn main() {
 <dd>
 
 **client_id:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_counterparty_id:** `Option<Option<String>>` — The ID of the client counterparty this document belongs to, if any. Requires `client_id`; the counterparty must belong to that client.
     
 </dd>
 </dl>
