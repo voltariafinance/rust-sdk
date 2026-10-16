@@ -4979,6 +4979,7 @@ async fn main() {
                 correlation_id: None,
                 loan_date: None,
                 repayment_method: None,
+                client_counterparty_id: None,
                 data: None,
             },
             None,
@@ -5048,6 +5049,14 @@ async fn main() {
 <dd>
 
 **repayment_method:** `Option<LoanRepaymentMethodEnum>` — How each installment is split into principal and interest: pmt (amortising) or constant_principal (loan amount divided equally across installments, the rest is interest)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_counterparty_id:** `Option<Option<String>>` — The ID of the client counterparty this loan relates to. It must belong to the loan's client.
     
 </dd>
 </dl>
@@ -5344,6 +5353,7 @@ async fn main() {
                         },
                     ],
                     repayment_method: None,
+                    client_counterparty_id: None,
                     data: Some(HashMap::from([
                         ("loan_type".to_string(), serde_json::json!("business")),
                         ("purpose".to_string(), serde_json::json!("expansion")),

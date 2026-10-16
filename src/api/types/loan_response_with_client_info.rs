@@ -52,6 +52,9 @@ pub struct LoanResponseWithClientInfo {
     pub early_settlement_amount: Option<String>,
     /// How each installment is split into principal and interest
     pub repayment_method: LoanRepaymentMethodEnum,
+    /// The ID of the client counterparty the loan relates to, if applicable
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub client_counterparty_id: Option<String>,
     /// Additional data related to the loan
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data: Option<HashMap<String, serde_json::Value>>,
@@ -91,6 +94,7 @@ pub struct LoanResponseWithClientInfoBuilder {
     early_settlement_date: Option<NaiveDate>,
     early_settlement_amount: Option<String>,
     repayment_method: Option<LoanRepaymentMethodEnum>,
+    client_counterparty_id: Option<String>,
     data: Option<HashMap<String, serde_json::Value>>,
     client: Option<ClientBaseInfo>,
     outstanding_principal: Option<String>,
@@ -183,6 +187,11 @@ impl LoanResponseWithClientInfoBuilder {
         self
     }
 
+    pub fn client_counterparty_id(mut self, value: impl Into<String>) -> Self {
+        self.client_counterparty_id = Some(value.into());
+        self
+    }
+
     pub fn data(mut self, value: HashMap<String, serde_json::Value>) -> Self {
         self.data = Some(value);
         self
@@ -253,6 +262,7 @@ impl LoanResponseWithClientInfoBuilder {
             repayment_method: self
                 .repayment_method
                 .ok_or_else(|| BuildError::missing_field("repayment_method"))?,
+            client_counterparty_id: self.client_counterparty_id,
             data: self.data,
             client: self
                 .client

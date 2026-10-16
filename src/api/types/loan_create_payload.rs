@@ -21,6 +21,9 @@ pub struct LoanCreatePayload {
     /// How each installment is split into principal and interest: pmt (amortising) or constant_principal (loan amount divided equally across installments, the rest is interest)
     #[serde(skip_serializing_if = "Option::is_none")]
     pub repayment_method: Option<LoanRepaymentMethodEnum>,
+    /// The ID of the client counterparty this loan relates to. It must belong to the loan's client.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub client_counterparty_id: Option<String>,
     /// Additional data related to the loan
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data: Option<HashMap<String, serde_json::Value>>,
@@ -42,6 +45,7 @@ pub struct LoanCreatePayloadBuilder {
     loan_date: Option<NaiveDate>,
     installments: Option<Vec<LoanInstallmentCreatePayload>>,
     repayment_method: Option<LoanRepaymentMethodEnum>,
+    client_counterparty_id: Option<String>,
     data: Option<HashMap<String, serde_json::Value>>,
 }
 
@@ -81,6 +85,11 @@ impl LoanCreatePayloadBuilder {
         self
     }
 
+    pub fn client_counterparty_id(mut self, value: impl Into<String>) -> Self {
+        self.client_counterparty_id = Some(value.into());
+        self
+    }
+
     pub fn data(mut self, value: HashMap<String, serde_json::Value>) -> Self {
         self.data = Some(value);
         self
@@ -109,6 +118,7 @@ impl LoanCreatePayloadBuilder {
                 .installments
                 .ok_or_else(|| BuildError::missing_field("installments"))?,
             repayment_method: self.repayment_method,
+            client_counterparty_id: self.client_counterparty_id,
             data: self.data,
         })
     }
