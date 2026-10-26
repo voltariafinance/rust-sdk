@@ -5,6 +5,7 @@ pub use crate::prelude::*;
 pub enum LoanRepaymentMethodEnum {
     Pmt,
     ConstantPrincipal,
+    Custom,
     /// This variant is used for forward compatibility.
     /// If the server sends a value not recognized by the current SDK version,
     /// it will be captured here with the raw string value.
@@ -15,6 +16,7 @@ impl Serialize for LoanRepaymentMethodEnum {
         match self {
             Self::Pmt => serializer.serialize_str("pmt"),
             Self::ConstantPrincipal => serializer.serialize_str("constant_principal"),
+            Self::Custom => serializer.serialize_str("custom"),
             Self::__Unknown(val) => serializer.serialize_str(val),
         }
     }
@@ -26,6 +28,7 @@ impl<'de> Deserialize<'de> for LoanRepaymentMethodEnum {
         match value.as_str() {
             "pmt" => Ok(Self::Pmt),
             "constant_principal" => Ok(Self::ConstantPrincipal),
+            "custom" => Ok(Self::Custom),
             _ => Ok(Self::__Unknown(value)),
         }
     }
@@ -36,6 +39,7 @@ impl fmt::Display for LoanRepaymentMethodEnum {
         match self {
             Self::Pmt => write!(f, "pmt"),
             Self::ConstantPrincipal => write!(f, "constant_principal"),
+            Self::Custom => write!(f, "custom"),
             Self::__Unknown(val) => write!(f, "{}", val),
         }
     }

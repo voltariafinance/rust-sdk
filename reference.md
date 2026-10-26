@@ -4082,11 +4082,15 @@ async fn main() {
                         expected_repayment_at: NaiveDate::parse_from_str("2025-12-01", "%Y-%m-%d")
                             .unwrap(),
                         amount: LoanInstallmentCreatePayloadAmount::Double(1000.0),
+                        principal: None,
+                        interest: None,
                     },
                     LoanInstallmentCreatePayload {
                         expected_repayment_at: NaiveDate::parse_from_str("2026-01-01", "%Y-%m-%d")
                             .unwrap(),
                         amount: LoanInstallmentCreatePayloadAmount::Double(1000.0),
+                        principal: None,
+                        interest: None,
                     },
                 ],
             },
@@ -4975,6 +4979,8 @@ async fn main() {
                     expected_repayment_at: NaiveDate::parse_from_str("2025-12-01", "%Y-%m-%d")
                         .unwrap(),
                     amount: LoanInstallmentCreatePayloadAmount::Double(1.1),
+                    principal: None,
+                    interest: None,
                 }],
                 correlation_id: None,
                 loan_date: None,
@@ -5048,7 +5054,7 @@ async fn main() {
 <dl>
 <dd>
 
-**repayment_method:** `Option<LoanRepaymentMethodEnum>` — How each installment is split into principal and interest: pmt (amortising) or constant_principal (loan amount divided equally across installments, the rest is interest)
+**repayment_method:** `Option<LoanRepaymentMethodEnum>` — How each installment is split into principal and interest: pmt (amortising), constant_principal (loan amount divided equally across installments, the rest is interest) or custom (you send each installment's principal and interest; total principal must equal the loan amount, and the loan amount and installments cannot be changed later)
     
 </dd>
 </dl>
@@ -5342,6 +5348,8 @@ async fn main() {
                             )
                             .unwrap(),
                             amount: LoanInstallmentCreatePayloadAmount::Double(26000.0),
+                            principal: None,
+                            interest: None,
                         },
                         LoanInstallmentCreatePayload {
                             expected_repayment_at: NaiveDate::parse_from_str(
@@ -5350,6 +5358,8 @@ async fn main() {
                             )
                             .unwrap(),
                             amount: LoanInstallmentCreatePayloadAmount::Double(26000.0),
+                            principal: None,
+                            interest: None,
                         },
                     ],
                     repayment_method: None,
