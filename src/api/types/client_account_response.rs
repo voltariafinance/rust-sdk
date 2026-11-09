@@ -41,6 +41,9 @@ pub struct ClientAccountResponse {
     /// Confirmation of Payee result for this account. `null` when the account has never been checked, or when the check does not apply to it. One of: `matched`, `close_match`, `not_matched`, `account_not_found`, `unavailable`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cop_status: Option<CopStatusEnum>,
+    /// Bank the sort code belongs to, from the account's Confirmation of Payee check. `null` when no check has named the bank: the account has never been checked, the check does not apply to it, or the provider returned no bank.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub bank_name: Option<String>,
     /// Timestamp when the account was created.
     #[serde(default)]
     #[serde(with = "crate::core::flexible_datetime::offset")]
@@ -70,6 +73,7 @@ pub struct ClientAccountResponseBuilder {
     address: Option<AccountAddress>,
     status: Option<AccountStatusEnum>,
     cop_status: Option<CopStatusEnum>,
+    bank_name: Option<String>,
     created_at: Option<DateTime<FixedOffset>>,
 }
 
@@ -144,6 +148,11 @@ impl ClientAccountResponseBuilder {
         self
     }
 
+    pub fn bank_name(mut self, value: impl Into<String>) -> Self {
+        self.bank_name = Some(value.into());
+        self
+    }
+
     pub fn created_at(mut self, value: DateTime<FixedOffset>) -> Self {
         self.created_at = Some(value);
         self
@@ -181,6 +190,7 @@ impl ClientAccountResponseBuilder {
                 .status
                 .ok_or_else(|| BuildError::missing_field("status"))?,
             cop_status: self.cop_status,
+            bank_name: self.bank_name,
             created_at: self
                 .created_at
                 .ok_or_else(|| BuildError::missing_field("created_at"))?,
